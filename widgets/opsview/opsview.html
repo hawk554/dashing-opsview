@@ -1,0 +1,22 @@
+<ul>
+<li data-bind-class="status">
+<h1 class="title" data-bind="title"></h1>
+<div data-showif="status | equals 'error'"> <!-- error -->
+  <h4>Error querying Nagios</h4>
+</div> <!-- /no error -->
+<div data-hideif="status | equals 'error'"> <!-- no error -->
+<div data-hideif="up | equals 0">
+<h3 data-bind="up"></h3>
+<h4 data-showif="up | equals 1">UP</h4>
+<h4 data-hideif="up | equals 1">UP</h4>
+</div>
+<div data-hideif="down | equals 0">
+<h3 data-bind="down"></h3>
+<h4 data-showif="down | equals 1">DOWN</h4>
+<h4 data-hideif="down | equals 1">DOWN</h4>
+</div>
+<p class="updated-at" data-bind="updatedAtMessage"></p>
+</div> <!-- /no error -->
+</li>
+</ul>
+
