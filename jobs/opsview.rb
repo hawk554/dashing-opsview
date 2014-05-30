@@ -32,7 +32,7 @@ SCHEDULER.every '30s' do
   critical = (resp_parsed['summary']['service']['critical'].to_i)/2
   warning = (resp_parsed['summary']['service']['warning'].to_i)/2
   #Determine color of widgets
-  status = (critical | down) > 0 ? "red" : (warning > 0 ? "yellow" : "green")
+  status = down > 0 ? "red" : critical > 0 ? "red": (warning > 0 ? "yellow" : "green")
   #Send events
   send_event('opsview', {criticals: critical, warnings: warning, up: up, down: down, status: status})
 end
