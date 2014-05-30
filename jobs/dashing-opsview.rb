@@ -28,13 +28,11 @@ SCHEDULER.every '30s' do
   #For some reason Opsview returns double of what is actually there
   up =  (resp_parsed['summary']['host']['up'].to_i)/2
   down =  (resp_parsed['summary']['host']['down'].to_i)/2
-  ok = (resp_parsed['summary']['service']['ok'].to_i)/2
+  #ok = (resp_parsed['summary']['service']['ok'].to_i)/2
   critical = (resp_parsed['summary']['service']['critical'].to_i)/2
   warning = (resp_parsed['summary']['service']['warning'].to_i)/2
   #Determine color of widgets
-  status_checks = critical > 0 ? "red" : (warning > 0 ? "yellow" : "green")
-  status_hosts = down > 0 ? "red" : "green"
+  status = (critical | down) > 0 ? "red" : (warning > 0 ? "yellow" : "green")
   #Send events
-  send_event('opsview-status', {criticals: critical, warnings: warning, status: status_checks})
-  send_event('opsview-hosts', {up: up, down: down, status: status_hosts})
+  send_event('opsview', {criticals: critical, warnings: warning, up: up, down: down, status: status})
 end
